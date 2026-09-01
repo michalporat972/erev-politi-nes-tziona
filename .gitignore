@@ -1,0 +1,3 @@
+# Delivery artifact — a zip of site/ for drag-and-drop deploys. Rebuild with:
+#   python3 -c "import shutil; shutil.make_archive('erev-politi-site','zip','site')"
+erev-politi-site.zip
