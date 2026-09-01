@@ -123,8 +123,20 @@ input, textarea, button { font-family: 'Frank Ruhl Libre', var(--font-body); }
   flex-wrap: wrap;
 }
 
-.date-num { font-weight: 900; font-size: clamp(96px, 17vw, 134px); }
-.when-meta { margin-top: 4px; font-size: 20px; font-weight: 500; }
+.when-date { --date-num-size: clamp(96px, 17vw, 134px); }
+.date-num { font-weight: 900; font-size: var(--date-num-size); }
+
+/* .cmyk-num paints its paper ground across a 0.12em padding bleed and then
+   hands the layout box back with a matching negative margin — so the bleed
+   hangs below the numeral, and because the numeral is positioned it paints
+   over whatever follows. Clear the bleed (it scales with the numeral) or this
+   line gets its top sliced off. */
+.when-meta {
+  position: relative;                                        /* never paintable-over */
+  margin-top: calc(0.12 * var(--date-num-size) + 6px);
+  font-size: 20px;
+  font-weight: 500;
+}
 
 .vote-note {
   flex-shrink: 0;
