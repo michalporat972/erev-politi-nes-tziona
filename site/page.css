@@ -1,0 +1,260 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   ערב פוליטי — דף נחיתה
+   Page layer over the Broadsheet design system (broadsheet.css). Every color,
+   shadow and ramp step comes from the system's tokens; this file only sets the
+   page's own type (Frank Ruhl Libre for Hebrew) and its layout.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Frank Ruhl Libre', var(--font-body);
+}
+h1, h2 { font-family: 'Frank Ruhl Libre', var(--font-heading); }
+input, textarea, button { font-family: 'Frank Ruhl Libre', var(--font-body); }
+
+/* Author rules like `.form { display: flex }` outrank the UA's `[hidden]`, so
+   the attribute needs to win outright — form.js toggles the form and the
+   confirmation card with it. */
+[hidden] { display: none !important; }
+
+/* The paper white of a pasted-on note or card — deliberately pure white
+   against the sheet's #f3f2f2 ground, so the tilted elements read as physical
+   paper laid on the broadsheet. */
+:root { --paper: #ffffff; }
+
+.sheet {
+  width: 100%;
+  max-width: 760px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 40px 28px 80px;
+}
+
+/* ── front-page furniture: the thick-thin head pair ───────────────────────── */
+.rail-thick { border-top: 6px solid var(--color-text); }
+.rail-thin { border-top: 2px solid var(--color-text); margin-top: 6px; }
+.rail-thick-sm { border-top-width: 4px; }
+.rail-thin-sm { border-top-width: 1.5px; margin-top: 5px; }
+
+.dateline {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 2px 0;
+  font-size: 17px;
+}
+
+/* ── portraits ────────────────────────────────────────────────────────────── */
+.portraits { position: relative; margin-top: 28px; }
+
+.portraits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  /* torn bottom edge — the sheet ripped off the press */
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 96% 100%, 92% 96.5%, 88% 99.5%, 84% 96%, 80% 100%, 75% 97.5%, 70% 99.8%, 65% 96.2%, 60% 99.6%, 55% 97%, 50% 100%, 45% 96.4%, 40% 99.5%, 35% 97.8%, 30% 99.9%, 25% 96.3%, 20% 99.7%, 15% 97.6%, 10% 99.9%, 5% 96.5%, 0 99%);
+}
+
+.portrait { height: clamp(210px, 40vw, 300px); }
+.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.name-label {
+  position: absolute;
+  bottom: 18px;
+  background: var(--color-bg);
+  padding: 4px 14px;
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+.name-label-start { right: 20px; transform: rotate(-2deg); }
+.name-label-end { left: 20px; transform: rotate(2deg); }
+
+/* ── masthead ─────────────────────────────────────────────────────────────── */
+.kicker {
+  margin-top: 34px;
+  font-size: 16px;
+  letter-spacing: 0.13em;
+  font-weight: 700;
+  color: var(--color-accent-700);
+}
+
+.headline {
+  margin: 12px 0 0;
+  font-weight: 900;
+  font-size: clamp(40px, 8vw, 62px);
+  line-height: 1.05;
+}
+.struck { text-decoration: line-through; text-decoration-thickness: 0.09em; }
+
+/* The system's plate constructions trim their absolute plates to the cap box
+   for hosts that trim their own line the same way. These hosts don't trim, so
+   the plates must not either — otherwise they'd sit a cap-height above the
+   paper union on engines that support text-box, and the misregistration would
+   read as a broken overlay instead of a breath out of register. */
+.cmyk-head .plate, .cmyk-num .plate { text-box: normal; }
+
+.subhead {
+  margin: 12px 0 0;
+  font-size: clamp(22px, 4.5vw, 30px);
+  font-weight: 700;
+  color: var(--color-accent-800);
+}
+
+.lede {
+  margin: 22px 0 0;
+  font-size: clamp(21px, 3.9vw, 29px);
+  line-height: 1.6;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ── date + vote note ─────────────────────────────────────────────────────── */
+.when {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.date-num { font-weight: 900; font-size: clamp(96px, 17vw, 134px); }
+.when-meta { margin-top: 4px; font-size: 20px; font-weight: 500; }
+
+.vote-note {
+  flex-shrink: 0;
+  width: 160px;
+  padding: 24px 22px 16px;
+  text-align: center;
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+  transform: rotate(-4deg);
+}
+.vote-note-mark { font-size: 82px; font-weight: 900; line-height: 0.9; color: var(--color-accent-800); }
+.vote-note-rule { border-top: 2px solid var(--color-accent-800); margin: 14px 6px 0; }
+.vote-note-caption { margin-top: 8px; font-size: 14px; font-weight: 700; color: var(--color-text); }
+
+/* ── registration ─────────────────────────────────────────────────────────── */
+.signup { margin-top: 64px; }
+.signup-title { margin: 20px 0 0; font-size: 34px; font-weight: 900; }
+.signup-note { margin: 6px 0 0; font-size: 17px; color: var(--color-neutral-700); }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 30px;
+  max-width: 480px;
+}
+.hp { display: none; }
+
+.form .field > label,
+.mood-field > legend {
+  display: block;
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+.optional { font-weight: 400; color: var(--color-neutral-600); }
+
+.form .input {
+  font-size: 17px;
+  min-height: 44px;
+  padding: 10px 12px;
+}
+.form textarea.input { min-height: auto; resize: vertical; }
+.form input[type="tel"] { text-align: right; }
+
+.mood-field { border: 0; margin: 0; padding: 0; min-width: 0; }
+.mood-group { display: flex; gap: 10px; flex-wrap: wrap; }
+.mood-opt { display: inline-flex; cursor: pointer; }
+.mood-opt input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.mood-opt span {
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  background: var(--paper);
+  color: var(--color-text);
+  border: 2px solid var(--color-neutral-400);
+  box-shadow: var(--shadow-sm);
+}
+.mood-opt:hover span { border-color: var(--color-accent-600); }
+.mood-opt input:checked + span {
+  background: var(--color-accent-800);
+  color: var(--paper);
+  border-color: var(--color-accent-800);
+}
+.mood-opt input:focus-visible + span { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* ── payment ──────────────────────────────────────────────────────────────── */
+.pay { margin-top: 12px; }
+.pay-row { display: flex; align-items: baseline; gap: 14px; }
+.pay-label { font-size: 17px; font-weight: 700; }
+.pay-amount { font-size: 44px; font-weight: 900; }
+.pay-note { margin-top: 4px; font-size: 15px; color: var(--color-neutral-700); }
+
+.bit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 22px;
+  border: 2px solid var(--color-text);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+.bit-link:hover { border-color: var(--color-accent-600); color: var(--color-accent-700); }
+
+.form-error { margin: 0; font-size: 16px; font-weight: 700; color: var(--color-accent-2-700); }
+
+.submit {
+  align-self: flex-start;
+  padding: 14px 36px;
+  /* .btn sets the system's serif; this page's chrome is the Hebrew serif */
+  font-family: 'Frank Ruhl Libre', var(--font-body);
+  font-size: 19px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+}
+.submit[aria-busy="true"] { opacity: 0.6; cursor: progress; }
+
+/* ── confirmation ─────────────────────────────────────────────────────────── */
+.confirm {
+  margin-top: 32px;
+  max-width: 420px;
+  padding: 36px 32px;
+  text-align: center;
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
+  transform: rotate(-1.5deg);
+}
+.confirm-mark { font-size: 46px; font-weight: 900; line-height: 1.1; color: var(--color-accent-800); }
+.confirm-rule { border-top: 2px solid var(--color-accent-800); margin: 18px 24px 0; }
+.confirm-line { margin: 14px 0 0; font-size: 18px; font-weight: 700; }
+.confirm-sub { margin: 8px 0 0; font-size: 16px; color: var(--color-neutral-700); }
+.confirm-bit { margin-top: 20px; }
+
+/* ── press wedge ──────────────────────────────────────────────────────────── */
+.wedge { display: flex; margin-top: 64px; height: 13px; }
+.wedge > div { flex: 1; }
+.wedge > .wedge-gap { flex: 0 0 26px; }
+.colophon { margin-top: 10px; font-size: 14px; color: var(--color-neutral-600); }
+
+/* ── small screens ────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .sheet { padding: 28px 20px 64px; }
+  .dateline { font-size: 15px; }
+  .when { align-items: flex-start; }
+  .confirm { padding: 32px 24px; }
+}
