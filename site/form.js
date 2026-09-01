@@ -34,6 +34,20 @@
       return;
     }
 
+    // Payment gates the registration. A static page can't verify a PayBox
+    // transfer, so this is the registrant's own word — recorded as `paid` so
+    // it can be reconciled against the PayBox group.
+    if (!data.get('paid')) {
+      fail('קודם התשלום בפייבוקס — בלי זה המקום לא נשמר. אחרי שמשלמים, מסמנים את התיבה.');
+      const pay = document.getElementById('pay');
+      pay.classList.remove('pay-flash');
+      void pay.offsetWidth;          // restart the animation on a repeat submit
+      pay.classList.add('pay-flash');
+      pay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      form.querySelector('#f-paid').focus({ preventScroll: true });
+      return;
+    }
+
     const submit = form.querySelector('.submit');
     submit.disabled = true;
     submit.setAttribute('aria-busy', 'true');

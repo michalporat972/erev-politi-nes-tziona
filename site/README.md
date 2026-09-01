@@ -42,19 +42,33 @@ finds `<form name="registration" data-netlify="true">`, and starts collecting.
 - Submissions appear under **Forms → registration** in the Netlify dashboard.
 - Turn on email notifications: **Site configuration → Forms → Form
   notifications → Add notification → Email notification**.
-- Fields collected: `name`, `phone`, `question`, `mood`.
+- Fields collected: `name`, `phone`, `question`, `mood`, `paid`.
 - A hidden honeypot field (`bot-field`) filters basic spam. If bots get
   through, enable reCAPTCHA in the Netlify form settings.
 
-## Before going live — two things to fill in
+## Payment
 
-1. **The Bit payment link.** Still the placeholder from the design
-   (`https://www.bitpay.co.il/app/me`). It appears in **three** places, each
-   marked with a `TODO` comment:
-   - `index.html` — the payment block inside the form
-   - `index.html` — the confirmation card
-   - `success.html` — the confirmation card
-2. **A share image.** There's no `og:image`, so links shared on WhatsApp and
+15 ₪ through the PayBox group **"ערב לא פוליטי - נס ציונה"**
+(`https://links.payboxapp.com/JNT7A1yJ45b`).
+
+Payment gates the registration: the form will not submit until the visitor ticks
+**שילמתי 15 ₪ בפייבוקס**. Submitting without it shows an error, flashes the
+payment block and scrolls to it.
+
+**This is an attestation, not a verified payment.** A static page has no way to
+confirm a PayBox transfer — there's no callback and no API to check against. The
+tick is the registrant's own word, and it rides along in the submission as the
+`paid` field so you can reconcile the Netlify form list against who's actually in
+the PayBox group. Anyone determined to register without paying still can.
+
+If you'd rather this were enforced rather than declared, the two real options are
+a payment provider with a redirect-back (Grow/Meshulam or Cardcom, which return
+to a success URL you control) or a small serverless function that reconciles
+against PayBox. Both mean giving up the pure-static setup — say the word.
+
+## Before going live — one thing to fill in
+
+1. **A share image.** There's no `og:image`, so links shared on WhatsApp and
    Facebook will show text only. Export one of the poster/story designs from
    `project/ערב פוליטי - מודעות v2.dc.html` as a PNG, drop it in `assets/`, and
    add `<meta property="og:image" content="https://<domain>/assets/<file>.png">`
@@ -65,9 +79,11 @@ finds `<form name="registration" data-netlify="true">`, and starts collecting.
 - **Event time.** The design carried date and venue but no time. 20:00 is now in
   the dateline rail, under the big `5.10` numeral, and in both confirmation
   cards.
-- **Payment link on the confirmation card.** In the prototype the confirmation
-  replaced the whole form, payment link included — so anyone who registered
-  before paying lost the link. The card now carries it too.
+- **Payment moved ahead of the confirmation.** In the prototype the confirmation
+  replaced the whole form, payment link included, and nothing required payment.
+  Payment is now a gate before the registration goes through, and the
+  confirmation card keeps a quiet link back to the PayBox group for anyone who
+  ticked the box ahead of themselves.
 - **The mood picker** is a radio group styled to look like the design's buttons,
   rather than JS-driven buttons. Same appearance, but it keyboard-navigates and
   submits its value natively.

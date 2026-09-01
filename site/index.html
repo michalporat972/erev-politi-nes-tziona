@@ -122,8 +122,8 @@
         </div>
       </fieldset>
 
-      <!-- ══ payment ══ -->
-      <div class="pay">
+      <!-- ══ payment — required before the registration goes through ══ -->
+      <div class="pay" id="pay">
         <div class="pay-row">
           <div class="pay-label">דמי השתתפות</div>
           <div class="cmyk-num pay-amount">
@@ -133,9 +133,16 @@
             <span class="plate plate-y" aria-hidden="true">15 ₪</span>
           </div>
         </div>
-        <div class="pay-note">או במילים אחרות: סכום סמלי כדי שנדע שאתם באים</div>
-        <!-- TODO: replace with the real Bit link (also in success.html). -->
-        <a class="bit-link" href="https://www.bitpay.co.il/app/me" target="_blank" rel="noopener">לתשלום 15 ₪ בביט ←</a>
+        <div class="pay-note">או במילים אחרות: סכום סמלי כדי שנדע שאתם באים. משלמים בפייבוקס — השימוש חינם.</div>
+
+        <a class="pay-link" href="https://links.payboxapp.com/JNT7A1yJ45b" target="_blank" rel="noopener">להצטרפות לקבוצת התשלום בפייבוקס ←</a>
+        <div class="pay-group">הקבוצה נקראת ״ערב לא פוליטי - נס ציונה״</div>
+
+        <label class="paid-check">
+          <input type="checkbox" name="paid" value="כן" id="f-paid" required>
+          <span class="paid-box" aria-hidden="true"></span>
+          <span>שילמתי 15 ₪ בפייבוקס <span class="req">*</span></span>
+        </label>
       </div>
 
       <p class="form-error" id="form-error" role="alert" hidden></p>
@@ -149,8 +156,7 @@
       <div class="confirm-rule"></div>
       <p class="confirm-line"><span id="confirm-name">מעולה</span>, נתראה ב־5.10 ב־20:00 בקפה שוורצמן.</p>
       <p class="confirm-sub">אל תשכחו: לא מדברים על פוליטיקאים.</p>
-      <!-- TODO: replace with the real Bit link (also in the form above). -->
-      <a class="bit-link confirm-bit" href="https://www.bitpay.co.il/app/me" target="_blank" rel="noopener">לתשלום 15 ₪ בביט ←</a>
+      <p class="confirm-pay">עוד לא השלמתם את התשלום? <a href="https://links.payboxapp.com/JNT7A1yJ45b" target="_blank" rel="noopener">הנה קישור לקבוצה בפייבוקס</a>.</p>
     </div>
   </section>
 
