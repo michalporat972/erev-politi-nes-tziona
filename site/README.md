@@ -66,13 +66,36 @@ a payment provider with a redirect-back (Grow/Meshulam or Cardcom, which return
 to a success URL you control) or a small serverless function that reconciles
 against PayBox. Both mean giving up the pure-static setup — say the word.
 
-## Before going live — one thing to fill in
+## Link previews (WhatsApp / Facebook)
 
-1. **A share image.** There's no `og:image`, so links shared on WhatsApp and
-   Facebook will show text only. Export one of the poster/story designs from
-   `project/ערב פוליטי - מודעות v2.dc.html` as a PNG, drop it in `assets/`, and
-   add `<meta property="og:image" content="https://<domain>/assets/<file>.png">`
-   to `index.html`.
+`assets/og.jpg` — 1200×630, 100 KB. Declared in `index.html` with `og:image`,
+its dimensions, alt text, and `twitter:card: summary_large_image`.
+
+It is **generated**, not hand-placed. Source and build script live in `tools/`
+at the repo root (outside `site/`, so they are not published):
+
+```
+node tools/render-og.mjs      # renders tools/og-card.html → site/assets/og.jpg
+```
+
+The template borrows the square post artboard's composition from
+`project/ערב פוליטי - מודעות v2.dc.html`, re-cut for the 1.91:1 ratio the
+platforms render large. Frank Ruhl Libre's Hebrew subset is embedded as base64
+(`tools/frl.b64`, SIL Open Font License) so a render never silently falls back
+to a substitute font. JPEG at quality 88 rather than PNG: WhatsApp skips the
+large preview for heavy images, and a PNG of two photographs is several times
+the size.
+
+Two things to know:
+
+- **The URLs are absolute and hardcoded to `erevpoliti.netlify.app`** — the
+  platforms don't resolve relative ones. Moving to a custom domain means
+  updating `og:url`, `og:image` and `twitter:image` in `index.html`.
+- **`assets/*` is served `immutable, max-age=31536000`** (see `netlify.toml`).
+  If you regenerate `og.jpg`, bump the URL in the meta tags to `og.jpg?v=2` or
+  the old image will stay cached — by CDNs, and by the platforms themselves,
+  which cache scraped previews aggressively. Facebook's Sharing Debugger can
+  force a re-scrape; WhatsApp generally follows once Facebook has.
 
 ## Notes on the implementation
 

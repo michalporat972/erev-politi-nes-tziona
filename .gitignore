@@ -1,3 +1,6 @@
 # Delivery artifact — a zip of site/ for drag-and-drop deploys. Rebuild with:
 #   python3 -c "import shutil; shutil.make_archive('erev-politi-site','zip','site')"
 erev-politi-site.zip
+
+# Pulled in only to run tools/render-og.mjs (playwright-core).
+node_modules/
