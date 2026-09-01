@@ -162,7 +162,9 @@ input, textarea, button { font-family: 'Frank Ruhl Libre', var(--font-body); }
   font-weight: 700;
   color: var(--color-text);
 }
-.optional { font-weight: 400; color: var(--color-neutral-600); }
+/* neutral-600 measures 3.85:1 on the page ground — under the 4.5:1 bar for
+   text this size; the next ramp step down clears it. */
+.optional { font-weight: 400; color: var(--color-neutral-700); }
 
 .form .input {
   font-size: 17px;
@@ -225,7 +227,11 @@ input, textarea, button { font-family: 'Frank Ruhl Libre', var(--font-body); }
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  /* the gate on the whole registration — the tap area is the full row, and
+     never below the 44px touch minimum */
+  min-height: 44px;
+  margin-top: 14px;
+  padding: 6px 0;
   font-size: 17px;
   font-weight: 700;
   cursor: pointer;
@@ -300,7 +306,7 @@ input, textarea, button { font-family: 'Frank Ruhl Libre', var(--font-body); }
 .wedge { display: flex; margin-top: 64px; height: 13px; }
 .wedge > div { flex: 1; }
 .wedge > .wedge-gap { flex: 0 0 26px; }
-.colophon { margin-top: 10px; font-size: 14px; color: var(--color-neutral-600); }
+.colophon { margin-top: 10px; font-size: 14px; color: var(--color-neutral-700); }
 
 /* ── small screens ────────────────────────────────────────────────────────── */
 @media (max-width: 560px) {

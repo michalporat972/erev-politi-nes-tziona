@@ -16,6 +16,10 @@
 
   form.noValidate = true;
 
+  // §7 reduced-motion: smooth scrolling is motion too — honour the preference.
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scrollTo = (el) => el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+
   const fail = (msg) => {
     error.textContent = msg;
     error.hidden = false;
@@ -43,7 +47,7 @@
       pay.classList.remove('pay-flash');
       void pay.offsetWidth;          // restart the animation on a repeat submit
       pay.classList.add('pay-flash');
-      pay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      scrollTo(pay);
       form.querySelector('#f-paid').focus({ preventScroll: true });
       return;
     }
@@ -65,7 +69,7 @@
       confirmCard.hidden = false;
       confirmCard.setAttribute('tabindex', '-1');
       confirmCard.focus();
-      confirmCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      scrollTo(confirmCard);
     } catch (err) {
       submit.disabled = false;
       submit.removeAttribute('aria-busy');
